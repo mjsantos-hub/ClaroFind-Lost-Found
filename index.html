@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLAROFIND | Eclaro Academy Lost & Found</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+     
+    <header class="site-header">
+        <div class="logo-area">
+            <img src="https://scontent.fmnl8-2.fna.fbcdn.net/v/t39.30808-1/762904019_122100098679423806_2619816364412474638_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s200x200&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=e99d92&_nc_ohc=F2l3v2mWlfUQ7kNvwFoKJal&_nc_oc=AdrgPFTYJmNzhAW6_sWayfOjsKzW5__9EwaFsnVnjmivTt04E3eL5pPh6IN71LVcAz4&_nc_zt=24&_nc_ht=scontent.fmnl8-2.fna&_nc_gid=a5YJqJkO-3OaMHRetxgpQw&_nc_ss=7b2a8&oh=00_AQECANUJSFPds-klj4IdohD_SYvBHxCICeALBs2GM4-myg&oe=6A777471" alt="ClaroFind Logo" class="logo-badge">
+            <div>
+                <h1>CLAROFIND</h1>
+                <p class="tagline">Eclaro Academy Lost &amp; Found Management System</p>
+            </div>
+        </div>
+        <p class="motto">"Helping students recover belongings faster."</p>
+    </header>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="main-nav">
+        <button class="nav-btn active" data-page="home">Home</button>
+        <button class="nav-btn" data-page="report-lost">Report Lost</button>
+        <button class="nav-btn" data-page="report-found">Report Found</button>
+        <button class="nav-btn" data-page="browse">Browse Items</button>
+        <button class="nav-btn" data-page="track">Track Report</button>
+        <button class="nav-btn" data-page="claim">Claim Item</button>
+        <button class="nav-btn" data-page="admin">Admin Login</button>
+    </nav>
+
+    <main class="container">
+
+         
+        <section id="page-home" class="page active">
+            <div class="hero">
+                <h2>Welcome to CLAROFIND</h2>
+                <p>Report lost or found items, track your reports, and securely claim belongings.</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="goPage('report-lost')">Report Lost Item</button>
+                    <button class="btn btn-secondary" onclick="goPage('report-found')">Report Found Item</button>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-card"><span class="stat-num" id="stat-lost">0</span><span>Lost Items</span></div>
+                <div class="stat-card"><span class="stat-num" id="stat-found">0</span><span>Found Items</span></div>
+                <div class="stat-card"><span class="stat-num" id="stat-claimed">0</span><span>Claimed</span></div>
+                <div class="stat-card"><span class="stat-num" id="stat-pending">0</span><span>Pending</span></div>
+            </div>
+
+            <div class="panel">
+                <h3>🔍 Search Items</h3>
+                <div class="search-bar">
+                    <input type="text" id="home-search" placeholder="Search item name, category, location...">
+                    <button class="btn btn-primary" onclick="searchFromHome()">Search</button>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>📋 Latest Reports</h3>
+                <div id="latest-reports"></div>
+            </div>
+        </section>
+
+        
+        <section id="page-report-lost" class="page">
+            <h2>📢 Report Lost Item</h2>
+            <form id="lost-form" class="report-form">
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Student Name *</label>
+                        <input type="text" id="lost-name" required>
+                    </div>
+                    <div class="field">
+                        <label>Grade &amp; Section *</label>
+                        <input type="text" id="lost-grade" placeholder="e.g. Grade 12 - ICT" required>
+                    </div>
+                    <div class="field">
+                        <label>Student ID *</label>
+                        <input type="text" id="lost-sid" required>
+                    </div>
+                    <div class="field">
+                        <label>Email *</label>
+                        <input type="email" id="lost-email" required>
+                    </div>
+                    <div class="field">
+                        <label>Contact Number *</label>
+                        <input type="tel" id="lost-contact" required>
+                    </div>
+                    <div class="field">
+                        <label>Item Category *</label>
+                        <select id="lost-category" required>
+                            <option value="">-- Select Category --</option>
+                            <option value="Electronics">📱 Electronics</option>
+                            <option value="School Supplies">📚 School Supplies</option>
+                            <option value="IDs">🪪 IDs</option>
+                            <option value="Bags">🎒 Bags</option>
+                            <option value="Clothing">👕 Clothing</option>
+                            <option value="Others">📦 Others</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Item Name *</label>
+                        <input type="text" id="lost-item-name" required>
+                    </div>
+                    <div class="field">
+                        <label>Color</label>
+                        <input type="text" id="lost-color">
+                    </div>
+                    <div class="field">
+                        <label>Brand</label>
+                        <input type="text" id="lost-brand">
+                    </div>
+                    <div class="field">
+                        <label>Date Lost *</label>
+                        <input type="date" id="lost-date" required>
+                    </div>
+                    <div class="field">
+                        <label>Location Lost *</label>
+                        <input type="text" id="lost-location" placeholder="e.g. Computer Lab" required>
+                    </div>
+                    <div class="field-full">
+                        <label>Description *</label>
+                        <textarea id="lost-desc" rows="3" placeholder="Describe the item in detail, any unique marks..." required></textarea>
+                    </div>
+                    <div class="field">
+                        <label>Upload Photo (optional)</label>
+                        <input type="file" id="lost-photo" accept="image/*">
+                    </div>
+                    <div class="field">
+                        <label>Secret Code (for claim verification) *</label>
+                        <input type="password" id="lost-secret" placeholder="Create a secret code" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit Report</button>
+            </form>
+        </section>
+
+        
+        <section id="page-report-found" class="page">
+            <h2>🔎 Report Found Item</h2>
+            <form id="found-form" class="report-form">
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Finder Name *</label>
+                        <input type="text" id="found-name" required>
+                    </div>
+                    <div class="field">
+                        <label>Grade &amp; Section *</label>
+                        <input type="text" id="found-grade" required>
+                    </div>
+                    <div class="field">
+                        <label>Student ID *</label>
+                        <input type="text" id="found-sid" required>
+                    </div>
+                    <div class="field">
+                        <label>Item Category *</label>
+                        <select id="found-category" required>
+                            <option value="">-- Select Category --</option>
+                            <option value="Electronics">📱 Electronics</option>
+                            <option value="School Supplies">📚 School Supplies</option>
+                            <option value="IDs">🪪 IDs</option>
+                            <option value="Bags">🎒 Bags</option>
+                            <option value="Clothing">👕 Clothing</option>
+                            <option value="Others">📦 Others</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Item Name *</label>
+                        <input type="text" id="found-item-name" required>
+                    </div>
+                    <div class="field">
+                        <label>Date Found *</label>
+                        <input type="date" id="found-date" required>
+                    </div>
+                    <div class="field">
+                        <label>Location Found *</label>
+                        <input type="text" id="found-location" placeholder="e.g. Cafeteria" required>
+                    </div>
+                    <div class="field">
+                        <label>Turned Over To *</label>
+                        <input type="text" id="found-turnover" placeholder="e.g. Ms. Dela Cruz" required>
+                    </div>
+                    <div class="field-full">
+                        <label>Description *</label>
+                        <textarea id="found-desc" rows="3" placeholder="Describe the item in detail..." required></textarea>
+                    </div>
+                    <div class="field">
+                        <label>Upload Photo (optional)</label>
+                        <input type="file" id="found-photo" accept="image/*">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Submit Report</button>
+            </form>
+        </section>
+
+        
+        <section id="page-browse" class="page">
+            <h2>🧺 Organized Items</h2>
+
+            <div class="browse-controls">
+                <input type="text" id="browse-search" placeholder="Search items..." oninput="renderBrowse()">
+                <select id="browse-category" onchange="renderBrowse()">
+                    <option value="all">All Categories</option>
+                    <option value="Electronics">📱 Electronics</option>
+                    <option value="School Supplies">📚 School Supplies</option>
+                    <option value="IDs">🪪 IDs</option>
+                    <option value="Bags">🎒 Bags</option>
+                    <option value="Clothing">👕 Clothing</option>
+                    <option value="Others">📦 Others</option>
+                </select>
+                <select id="browse-status" onchange="renderBrowse()">
+                    <option value="all">All Statuses</option>
+                    <option value="Reported">Reported</option>
+                    <option value="Received">Received</option>
+                    <option value="Under Review">Under Review</option>
+                    <option value="Possible Match">Possible Match</option>
+                    <option value="Verification">Verification</option>
+                    <option value="Ready to Claim">Ready to Claim</option>
+                    <option value="Claimed">Claimed</option>
+                    <option value="Closed">Closed</option>
+                </select>
+                <select id="browse-type" onchange="renderBrowse()">
+                    <option value="all">All Types</option>
+                    <option value="lost">Lost</option>
+                    <option value="found">Found</option>
+                </select>
+            </div>
+
+            <div id="category-groups"></div>
+        </section>
+
+        
+        <section id="page-track" class="page">
+            <h2>📈 Track Report</h2>
+            <p>Enter your tracking number to see the status of your report.</p>
+            <div class="track-search">
+                <input type="text" id="track-input" placeholder="e.g. CF-2026-000145">
+                <button class="btn btn-primary" onclick="trackReport()">Search</button>
+            </div>
+            <p class="hint">Format: <strong>CF-YYYY-XXXXXX</strong></p>
+            <div id="track-result"></div>
+        </section>
+
+        
+        <section id="page-claim" class="page">
+            <h2>📦 Secure Claim Verification</h2>
+            <p>Select a "Ready to Claim" item and verify your identity to release it.</p>
+            <div class="claim-list" id="claim-list"></div>
+        </section>
+
+       
+        <section id="page-admin" class="page">
+            <h2>🔐 Admin Login</h2>
+            <form id="admin-login-form" class="report-form">
+                <div class="field">
+                    <label>Admin Username</label>
+                    <input type="text" id="admin-user" placeholder="admin" required>
+                </div>
+                <div class="field">
+                    <label>Admin Password</label>
+                    <input type="password" id="admin-pass" placeholder="admin123" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+            <p class="hint">Demo credentials: <strong>admin</strong> / <strong>admin123</strong></p>
+
+            <div id="admin-dashboard" class="hidden">
+                <h3>All Reports</h3>
+                <div id="admin-reports"></div>
+            </div>
+        </section>
+
+    </main>
+
+    
+    <div id="claim-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeClaimModal()">&times;</span>
+            <h3>🔐 Claim Verification</h3>
+            <p>To release <strong id="modal-item-name"></strong>, please verify the following:</p>
+            <div class="field">
+                <label>Enter Secret Code (created by reporter) *</label>
+                <input type="password" id="claim-secret">
+            </div>
+            <div class="field">
+                <label>Confirm Student ID *</label>
+                <input type="text" id="claim-sid">
+            </div>
+            <p id="claim-error" class="error hidden"></p>
+            <button class="btn btn-primary btn-block" onclick="verifyClaim()">Verify &amp; Claim</button>
+        </div>
+    </div>
+
+    
+    <div id="success-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeSuccessModal()">&times;</span>
+            <h3>✅ Report Submitted!</h3>
+            <div id="success-details"></div>
+            <button class="btn btn-primary" onclick="closeSuccessModal()">OK</button>
+        </div>
+    </div>
+
+
+<!-- ===== FEEDBACK ===== -->
+    <div class="feedback-section">
+        <div class="feedback-panel" id="feedback-panel">
+            <h3>💬 Feedback</h3>
+            <p class="feedback-sub">We'd love to hear your thoughts! Send us a message and we'll get back to you.</p>
+            <form class="report-form-feedback" onsubmit="submitFeedback(event)">
+                <div class="field">
+                    <label>Your Name *</label>
+                    <input type="text" id="feedback-name" required>
+                </div>
+                <div class="field">
+                    <label>Email *</label>
+                    <input type="email" id="feedback-email" required>
+                </div>
+                <div class="field">
+                    <label>Message *</label>
+                    <textarea id="feedback-msg" rows="4" placeholder="Write your feedback, suggestions, or concerns here..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Send Feedback</button>
+            </form>
+            <div class="feedback-thanks">✅ Thank you! Your feedback has been submitted.</div>
+        </div>
+    </div>
+
+    <center>
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>CLAROFIND</h4>
+                <p>Eclaro Academy Lost &amp; Found Management System</p>
+                <p class="footer-motto">"Helping students recover belongings faster."</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p>📍 Eclaro Academy, Ever Gotesco Mall Commonwealth Center, Quezon City, Philippines</p>
+                <p>📞 0975-517-1457</p>
+                <p>📧 clarofind@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <a class="fb-link" href="https://www.facebook.com/profile.php?id=61592714194292" target="_blank" rel="noopener">Click here
+                </a>
+                <p class="footer-note">Message us on Facebook for questions, item updates, or concerns.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 CLAROFIND · Eclaro Academy. All rights reserved.</p>
+        </div>
+    </footer>
+    </center>
+
+    <script src="script.js"></script>
+</body>
+</html>
