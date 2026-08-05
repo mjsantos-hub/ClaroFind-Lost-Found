@@ -276,6 +276,43 @@ body {
     box-shadow: 0 0 0 3px rgba(31,78,158,0.15);
 }
 
+/* ===== PASSWORD / SECRET CODE EYE TOGGLE ===== */
+.pwd-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.pwd-wrap input {
+    width: 100%;
+    padding-right: 42px;
+}
+
+.toggle-pwd {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 6px;
+    color: #888;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+}
+
+.toggle-pwd:hover {
+    color: var(--blue);
+    background: rgba(31,78,158,0.1);
+}
+
+.toggle-pwd.showing {
+    color: var(--gold);
+}
+
  
 .browse-controls {
     display: flex;

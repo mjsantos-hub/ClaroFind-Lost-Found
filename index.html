@@ -130,9 +130,12 @@
                         <label>Upload Photo (optional)</label>
                         <input type="file" id="lost-photo" accept="image/*">
                     </div>
-                    <div class="field">
+<div class="field">
                         <label>Secret Code (for claim verification) *</label>
-                        <input type="password" id="lost-secret" placeholder="Create a secret code" required>
+                        <div class="pwd-wrap">
+                            <input type="password" id="lost-secret" placeholder="Create a secret code" required>
+                            <button type="button" class="toggle-pwd" onclick="togglePwd('lost-secret', this)" aria-label="Toggle secret code visibility">👁️</button>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Submit Report</button>
@@ -260,9 +263,12 @@
                     <label>Admin Username</label>
                     <input type="text" id="admin-user" placeholder="admin" required>
                 </div>
-                <div class="field">
+<div class="field">
                     <label>Admin Password</label>
-                    <input type="password" id="admin-pass" placeholder="admin123" required>
+                    <div class="pwd-wrap">
+                        <input type="password" id="admin-pass" placeholder="admin123" required>
+                        <button type="button" class="toggle-pwd" onclick="togglePwd('admin-pass', this)" aria-label="Toggle password visibility">👁️</button>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
@@ -282,9 +288,12 @@
             <span class="modal-close" onclick="closeClaimModal()">&times;</span>
             <h3>🔐 Claim Verification</h3>
             <p>To release <strong id="modal-item-name"></strong>, please verify the following:</p>
-            <div class="field">
+<div class="field">
                 <label>Enter Secret Code (created by reporter) *</label>
-                <input type="password" id="claim-secret">
+                <div class="pwd-wrap">
+                    <input type="password" id="claim-secret">
+                    <button type="button" class="toggle-pwd" onclick="togglePwd('claim-secret', this)" aria-label="Toggle secret code visibility">👁️</button>
+                </div>
             </div>
             <div class="field">
                 <label>Confirm Student ID *</label>

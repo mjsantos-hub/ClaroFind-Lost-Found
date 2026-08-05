@@ -492,6 +492,20 @@ function updateStatus(tracking, newStatus) { ;
     }
 }
 
+// ===== PASSWORD / SECRET CODE VISIBILITY TOGGLE =====
+function togglePwd(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const isHidden = input.type === "password";
+    input.type = isHidden ? "text" : "password";
+    btn.textContent = isHidden ? "🙈" : "👁️";
+    btn.classList.toggle("showing", isHidden);
+    input.focus();
+    // Keep cursor at end of the value
+    const len = input.value.length;
+    input.setSelectionRange(len, len);
+}
+
 // ===== FEEDBACK =====
 function submitFeedback(event) {
     event.preventDefault();
