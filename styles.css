@@ -31,7 +31,7 @@ body {
 .site-header {
     background: linear-gradient(135deg, var(--navy-dark), var(--navy));
     color: var(--white);
-    padding: 35px 45px;
+    padding: 35px 35px;
     display: flex;
     justify-content: space-between;
     align-items: center;
