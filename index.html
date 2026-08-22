@@ -11,7 +11,7 @@
      
     <header class="site-header">
         <div class="logo-area">
-            <img src="https://scontent.fmnl8-2.fna.fbcdn.net/v/t39.30808-1/762904019_122100098679423806_2619816364412474638_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s200x200&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=e99d92&_nc_ohc=F2l3v2mWlfUQ7kNvwFoKJal&_nc_oc=AdrgPFTYJmNzhAW6_sWayfOjsKzW5__9EwaFsnVnjmivTt04E3eL5pPh6IN71LVcAz4&_nc_zt=24&_nc_ht=scontent.fmnl8-2.fna&_nc_gid=a5YJqJkO-3OaMHRetxgpQw&_nc_ss=7b2a8&oh=00_AQECANUJSFPds-klj4IdohD_SYvBHxCICeALBs2GM4-myg&oe=6A777471" alt="ClaroFind Logo" class="logo-badge">
+            <img src="https://scontent.fmnl8-2.fna.fbcdn.net/v/t39.30808-1/762904019_122100098679423806_2619816364412474638_n.jpg?stp=dst-jpg_tt6&cstp=mx1254x1254&ctp=s200x200&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=e99d92&_nc_eui2=AeHHFcagyrMyCZsNJZnehq1J7ou__Lnl04Lui7_8ueXTgpOL-OPIfiILBmD5r4YOIrJbqAHAN_rS09jAee9wcyv4&_nc_ohc=Pj69CtCaWI0Q7kNvwHSqKuY&_nc_oc=Adrb3mqDTIc0Uur9gbrIE-2eo-NkBnenNl3TRMRLrGcBcDG-YsX-Ggi1fKwvRNL8wws&_nc_zt=24&_nc_ht=scontent.fmnl8-2.fna&_nc_gid=O-PbBGfGQv4C-YqO0FxV7Q&_nc_ss=7b2a8&oh=00_AQHQZEcY1kkcs_HgoBAojNZPvOZ09gJvKuYZG__1iMI9Hw&oe=6A8F67B1">
             <div>
                 <h1>CLAROFIND</h1>
                 <p class="tagline">Eclaro Academy Lost &amp; Found Management System</p>
@@ -130,12 +130,9 @@
                         <label>Upload Photo (optional)</label>
                         <input type="file" id="lost-photo" accept="image/*">
                     </div>
-<div class="field">
+                    <div class="field">
                         <label>Secret Code (for claim verification) *</label>
-                        <div class="pwd-wrap">
-                            <input type="password" id="lost-secret" placeholder="Create a secret code" required>
-                            <button type="button" class="toggle-pwd" onclick="togglePwd('lost-secret', this)" aria-label="Toggle secret code visibility">👁️</button>
-                        </div>
+                        <input type="password" id="lost-secret" placeholder="Create a secret code" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Submit Report</button>
@@ -263,12 +260,9 @@
                     <label>Admin Username</label>
                     <input type="text" id="admin-user" placeholder="admin" required>
                 </div>
-<div class="field">
+                <div class="field">
                     <label>Admin Password</label>
-                    <div class="pwd-wrap">
-                        <input type="password" id="admin-pass" placeholder="admin123" required>
-                        <button type="button" class="toggle-pwd" onclick="togglePwd('admin-pass', this)" aria-label="Toggle password visibility">👁️</button>
-                    </div>
+                    <input type="password" id="admin-pass" placeholder="admin123" required>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
@@ -288,12 +282,9 @@
             <span class="modal-close" onclick="closeClaimModal()">&times;</span>
             <h3>🔐 Claim Verification</h3>
             <p>To release <strong id="modal-item-name"></strong>, please verify the following:</p>
-<div class="field">
+            <div class="field">
                 <label>Enter Secret Code (created by reporter) *</label>
-                <div class="pwd-wrap">
-                    <input type="password" id="claim-secret">
-                    <button type="button" class="toggle-pwd" onclick="togglePwd('claim-secret', this)" aria-label="Toggle secret code visibility">👁️</button>
-                </div>
+                <input type="password" id="claim-secret">
             </div>
             <div class="field">
                 <label>Confirm Student ID *</label>
