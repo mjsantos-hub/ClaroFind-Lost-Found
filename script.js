@@ -190,23 +190,7 @@ document.getElementById("lost-form").addEventListener("submit", function(e) {
         turnedOver: "",
         photo: ""
     };
-    const photoFile = document.getElementById("lost-photo").files[0];
-    if (photoFile) {
-        const reader = new FileReader();
-        reader.onload = e2 => {
-            report.photo = e2.target.result;
-            reports.unshift(report);
-            saveReports();
-            showSuccess(report);
-        };
-        reader.readAsDataURL(photoFile);
-    } else {
-        reports.unshift(report);
-        saveReports();
-        showSuccess(report);
-    }
-    this.reset();
-});
+    
 
  
 document.getElementById("found-form").addEventListener("submit", function(e) {
