@@ -401,7 +401,7 @@ listEl.innerHTML = claimable.map(r => `
             <h4>${escapeHTML(r.itemName)}</h4>
             <p>📍 ${escapeHTML(r.location)} | ${escapeHTML(r.category)}</p>
             <p>Ref: ${escapeHTML(r.tracking)}</p>
-            <button class="btn btn-primary" onclick="openClaimModal('${r.tracking}')">Claim This Item</button>
+            <button class="btn btn-primary" onclick="openClaimModal('${r.tracking}')">Ready to claim</button>
         </div>
     `).join("");
 }
