@@ -126,7 +126,10 @@
                         <label>Description *</label>
                         <textarea id="lost-desc" rows="3" placeholder="Describe the item in detail, any unique marks..." required></textarea>
                     </div>
-                   
+                    <div class="field">
+                        <label>Upload Photo (optional)</label>
+                        <input type="file" id="lost-photo" accept="image/*">
+                    </div>
                     <div class="field">
                         <label>Secret Code (for claim verification) *</label>
                         <input type="password" id="lost-secret" placeholder="Create a secret code" required>
@@ -185,7 +188,10 @@
                         <label>Description *</label>
                         <textarea id="found-desc" rows="3" placeholder="Describe the item in detail..." required></textarea>
                     </div>
-                    
+                    <div class="field">
+                        <label>Upload Photo (optional)</label>
+                        <input type="file" id="found-photo" accept="image/*">
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Submit Report</button>
             </form>
@@ -260,6 +266,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
+            
 
             <div id="admin-dashboard" class="hidden">
                 <h3>All Reports</h3>
