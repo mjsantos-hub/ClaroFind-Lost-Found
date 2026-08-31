@@ -458,7 +458,7 @@ document.getElementById("admin-login-form").addEventListener("submit", function(
         renderAdmin();
         alert("Welcome, Admin!");
     } else {
-        alert("Invalid credentials. Try admin / admin123");
+        alert("Invalid credentials.");
     }
 });
 
