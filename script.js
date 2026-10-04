@@ -9,6 +9,18 @@ const STATUS_FLOW = [
     "Closed"
 ];
 
+// Check if text has only letters
+function isLettersOnly(str) {
+    if (!str) return true;
+    return /^[A-Za-zÑñ\s]+$/.test(str);
+}
+
+// Check if text has only numbers
+function isNumbersOnly(str) {
+    if (!str) return true;
+    return /^[0-9]+$/.test(str);
+}
+
 
 function typeLabel(report) {
     return report.type === "lost" ? "Lost" : "Found";
@@ -231,19 +243,58 @@ function showSuccessWithSecret(report) {
 }
 
  
+function isLettersOnly(str) {
+    if (!str) return true;
+    return /^[A-Za-zÑñ\s]+$/.test(str);
+}
+
+function isNumbersOnly(str) {
+    if (!str) return true;
+    return /^[0-9]+$/.test(str);
+}
+
+function generateSecretCode() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let code = "";
+    for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+}
+
+// Lost Form Submission with validation & auto-code
 document.getElementById("lost-form").addEventListener("submit", function(e) {
     e.preventDefault();
+
+    // Strict validation rules
+    const nameVal = document.getElementById("lost-name").value.trim();
+    const sidVal = document.getElementById("lost-sid").value.trim();
+    const contactVal = document.getElementById("lost-contact").value.trim();
+
+    if (!isLettersOnly(nameVal)) {
+        alert("❌ Error: Student Name must contain letters only.");
+        return;
+    }
+    if (!isNumbersOnly(sidVal)) {
+        alert("❌ Error: LRN must contain numbers only.");
+        return;
+    }
+    if (!isNumbersOnly(contactVal)) {
+        alert("❌ Error: Contact Number must contain numbers only.");
+        return;
+    }
+
     const tracking = generateTracking();
-    const autoSecret = generateSecretCode(); // Automatically created!
+    const autoSecret = generateSecretCode(); // Auto-generated secret code
 
     const report = {
         tracking: tracking,
         type: "lost",
-        name: document.getElementById("lost-name").value,
+        name: nameVal,
         grade: document.getElementById("lost-grade").value,
-        sid: document.getElementById("lost-sid").value,
+        sid: sidVal,
         email: document.getElementById("lost-email").value,
-        contact: document.getElementById("lost-contact").value,
+        contact: contactVal,
         category: document.getElementById("lost-category").value,
         itemName: document.getElementById("lost-item-name").value,
         color: document.getElementById("lost-color") ? document.getElementById("lost-color").value : "",
@@ -251,7 +302,7 @@ document.getElementById("lost-form").addEventListener("submit", function(e) {
         location: document.getElementById("lost-location").value,
         date: document.getElementById("lost-date").value,
         description: document.getElementById("lost-desc").value,
-        secret: autoSecret, // Saved automatically
+        secret: autoSecret,
         status: "Reported",
         turnedOver: "",
         photo: ""
@@ -576,30 +627,5 @@ function closePrivacyModal() {
     document.getElementById("privacy-modal").classList.add("hidden");
 }
 
-document.getElementById("lost-form").addEventListener("submit", function(e) {
-    e.preventDefault();
 
-    // Check rules before submitting
-    if (!isLettersOnly(document.getElementById("lost-name").value)) {
-        alert("Error: Name must contain letters only.");
-        return;
-    }
-    if (!isNumbersOnly(document.getElementById("lost-sid").value)) {
-        alert("Error: LRN must contain numbers only.");
-        return;
-    }
-
-    // ... (rest of your submit code goes here)
-});
-
-function isLettersOnly(str) {
-    if (!str) return true; // allow empty if optional
-    return /^[A-Za-zÑñ\s]+$/.test(str);
-}
-
-// Validation helper for numbers only (e.g., LRN, Contact numbers)
-function isNumbersOnly(str) {
-    return /^[0-9]+$/.test(str);
-}
- 
 renderHome();
