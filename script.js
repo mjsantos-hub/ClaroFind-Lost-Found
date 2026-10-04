@@ -575,5 +575,31 @@ function openPrivacyModal() {
 function closePrivacyModal() {
     document.getElementById("privacy-modal").classList.add("hidden");
 }
+
+document.getElementById("lost-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    // Check rules before submitting
+    if (!isLettersOnly(document.getElementById("lost-name").value)) {
+        alert("Error: Name must contain letters only.");
+        return;
+    }
+    if (!isNumbersOnly(document.getElementById("lost-sid").value)) {
+        alert("Error: LRN must contain numbers only.");
+        return;
+    }
+
+    // ... (rest of your submit code goes here)
+});
+
+function isLettersOnly(str) {
+    if (!str) return true; // allow empty if optional
+    return /^[A-Za-zÑñ\s]+$/.test(str);
+}
+
+// Validation helper for numbers only (e.g., LRN, Contact numbers)
+function isNumbersOnly(str) {
+    return /^[0-9]+$/.test(str);
+}
  
 renderHome();
