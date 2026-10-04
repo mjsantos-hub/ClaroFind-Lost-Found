@@ -1,3 +1,18 @@
+.header-right-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.btn-sm {
+    padding: 8px 14px;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .header-right-group { align-items: center; margin-top: 10px; }
+}
 
 :root {
     --navy: #1f4e9e;

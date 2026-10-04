@@ -169,7 +169,13 @@ function generateTracking() {
  
 document.getElementById("lost-form").addEventListener("submit", function(e) {
     e.preventDefault();
+    
+    const photoInput = document.getElementById("lost-photo");
+    if (!validateFileSize(photoInput)) return;
+
     const tracking = generateTracking();
+    const autoSecret = generateSecretCode(); // Automatically generated code
+
     const report = {
         tracking: tracking,
         type: "lost",
@@ -180,73 +186,113 @@ document.getElementById("lost-form").addEventListener("submit", function(e) {
         contact: document.getElementById("lost-contact").value,
         category: document.getElementById("lost-category").value,
         itemName: document.getElementById("lost-item-name").value,
-        color: document.getElementById("lost-color").value,
-        brand: document.getElementById("lost-brand").value,
+        brand: document.getElementById("lost-brand") ? document.getElementById("lost-brand").value : "",
+        color: document.getElementById("lost-color") ? document.getElementById("lost-color").value : "",
+        specific: document.getElementById("lost-specific") ? document.getElementById("lost-specific").value : "",
         date: document.getElementById("lost-date").value,
         location: document.getElementById("lost-location").value,
         description: document.getElementById("lost-desc").value,
-        secret: document.getElementById("lost-secret").value,
+        secret: autoSecret, // Saved securely
         status: "Reported",
-        turnedOver: "",
+        turnedOver: "OSA / Admin Office",
         photo: ""
     };
-    const photoFile = document.getElementById("lost-photo").files[0];
+
+    const photoFile = photoInput.files[0];
     if (photoFile) {
         const reader = new FileReader();
         reader.onload = e2 => {
             report.photo = e2.target.result;
             reports.unshift(report);
             saveReports();
-            showSuccess(report);
+            showSuccessWithSecret(report);
         };
         reader.readAsDataURL(photoFile);
     } else {
         reports.unshift(report);
         saveReports();
-        showSuccess(report);
+        showSuccessWithSecret(report);
     }
     this.reset();
 });
 
+// Success popup displaying the auto-generated secret code
+function showSuccessWithSecret(report) {
+    document.getElementById("success-details").innerHTML = `
+        <p><strong>Tracking Number:</strong> <span class="badge Received">${escapeHTML(report.tracking)}</span></p>
+        <p><strong>Item:</strong> ${escapeHTML(report.itemName)}</p>
+        <p style="background:#e6f7ec; padding:10px; border-radius:6px; margin:10px 0; color:#2e9e5b;">
+            🔑 <strong>Your Auto-Generated Secret Code:</strong> <br><span style="font-size:18px; font-weight:bold;">${escapeHTML(report.secret)}</span><br>
+            <small>Save this code! You will need it alongside your Student ID to claim your item.</small>
+        </p>
+        <p><strong>Status:</strong> ${escapeHTML(report.status)}</p>
+    `;
+    document.getElementById("success-modal").classList.remove("hidden");
+}
+
  
-document.getElementById("found-form").addEventListener("submit", function(e) {
+document.getElementById("lost-form").addEventListener("submit", function(e) {
     e.preventDefault();
+    
+    const photoInput = document.getElementById("lost-photo");
+    if (!validateFileSize(photoInput)) return;
+
     const tracking = generateTracking();
+    const autoSecret = generateSecretCode(); // Automatically generated code
+
     const report = {
         tracking: tracking,
-        type: "found",
-        name: document.getElementById("found-name").value,
-        grade: document.getElementById("found-grade").value,
-        sid: document.getElementById("found-sid").value,
-        category: document.getElementById("found-category").value,
-        itemName: document.getElementById("found-item-name").value,
-        date: document.getElementById("found-date").value,
-        location: document.getElementById("found-location").value,
-        description: document.getElementById("found-desc").value,
-        turnedOver: document.getElementById("found-turnover").value,
-        secret: "",
-        status: "Received",
-        color: "",
-        brand: "",
+        type: "lost",
+        name: document.getElementById("lost-name").value,
+        grade: document.getElementById("lost-grade").value,
+        sid: document.getElementById("lost-sid").value,
+        email: document.getElementById("lost-email").value,
+        contact: document.getElementById("lost-contact").value,
+        category: document.getElementById("lost-category").value,
+        itemName: document.getElementById("lost-item-name").value,
+        brand: document.getElementById("lost-brand") ? document.getElementById("lost-brand").value : "",
+        color: document.getElementById("lost-color") ? document.getElementById("lost-color").value : "",
+        specific: document.getElementById("lost-specific") ? document.getElementById("lost-specific").value : "",
+        date: document.getElementById("lost-date").value,
+        location: document.getElementById("lost-location").value,
+        description: document.getElementById("lost-desc").value,
+        secret: autoSecret, // Saved securely
+        status: "Reported",
+        turnedOver: "OSA / Admin Office",
         photo: ""
     };
-    const photoFile = document.getElementById("found-photo").files[0];
+
+    const photoFile = photoInput.files[0];
     if (photoFile) {
         const reader = new FileReader();
         reader.onload = e2 => {
             report.photo = e2.target.result;
             reports.unshift(report);
             saveReports();
-            showSuccess(report);
+            showSuccessWithSecret(report);
         };
         reader.readAsDataURL(photoFile);
     } else {
         reports.unshift(report);
         saveReports();
-        showSuccess(report);
+        showSuccessWithSecret(report);
     }
     this.reset();
 });
+
+// Success popup displaying the auto-generated secret code
+function showSuccessWithSecret(report) {
+    document.getElementById("success-details").innerHTML = `
+        <p><strong>Tracking Number:</strong> <span class="badge Received">${escapeHTML(report.tracking)}</span></p>
+        <p><strong>Item:</strong> ${escapeHTML(report.itemName)}</p>
+        <p style="background:#e6f7ec; padding:10px; border-radius:6px; margin:10px 0; color:#2e9e5b;">
+            🔑 <strong>Your Auto-Generated Secret Code:</strong> <br><span style="font-size:18px; font-weight:bold;">${escapeHTML(report.secret)}</span><br>
+            <small>Save this code! You will need it alongside your Student ID to claim your item.</small>
+        </p>
+        <p><strong>Status:</strong> ${escapeHTML(report.status)}</p>
+    `;
+    document.getElementById("success-modal").classList.remove("hidden");
+}
 
  
 function showSuccess(report) {
@@ -425,25 +471,36 @@ function closeClaimModal() {
 
 function verifyClaim() {
     const report = reports.find(r => r.tracking === currentClaimTracking);
-    if (!report) return;
+    const errEl = document.getElementById("claim-error");
+    
+    if (!report) {
+        errEl.textContent = "Error: The selected item record no longer exists in the system database.";
+        errEl.classList.remove("hidden");
+        return;
+    }
+
     const secret = document.getElementById("claim-secret").value;
     const sid = document.getElementById("claim-sid").value;
-    const errEl = document.getElementById("claim-error");
 
     if (!report.secret) {
-        errEl.textContent = "This item has no secret code on file. Please visit the admin office to verify.";
+        errEl.textContent = "This item has no secret code on file. Please visit the OSA office.";
         errEl.classList.remove("hidden");
         return;
     }
+
     if (secret !== report.secret || sid !== report.sid) {
-        errEl.textContent = "Verification failed. Secret code or Student ID does not match the report.";
+        errEl.textContent = "Verification failed. Secret code or Student ID does not match.";
         errEl.classList.remove("hidden");
         return;
     }
+
     report.status = "Claimed";
+    
+    reports = reports.filter(r => r.tracking !== currentClaimTracking);
     saveReports();
+    
     closeClaimModal();
-    alert(`✅ Item "${report.itemName}" successfully claimed! Please present your Student ID to the admin office.`);
+    alert(`✅ Item successfully claimed and archived (Inc Delete completed).`);
     renderClaimList();
     renderHome();
 }
@@ -492,7 +549,6 @@ function updateStatus(tracking, newStatus) { ;
     }
 }
 
-// ===== FEEDBACK =====
 function submitFeedback(event) {
     event.preventDefault();
     const panel = document.getElementById("feedback-panel");
@@ -502,5 +558,31 @@ function submitFeedback(event) {
     document.getElementById("feedback-msg").value = "";
 }
 
+function generateSecretCode() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let code = "";
+    for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
+}
+
+function validateFileSize(fileInput) {
+    if (fileInput.files && fileInput.files[0]) {
+        const fileSizeMB = fileInput.files[0].size / (1024 * 1024);
+        if (fileSizeMB > 50) {
+            alert("❌ File size exceeds 50MB limit. Please choose a smaller image.");
+            return false;
+        }
+    }
+    return true;
+}
+
+function openPrivacyModal() {
+    document.getElementById("privacy-modal").classList.remove("hidden");
+}
+function closePrivacyModal() {
+    document.getElementById("privacy-modal").classList.add("hidden");
+}
  
 renderHome();
