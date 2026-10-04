@@ -473,14 +473,15 @@ function verifyClaim() {
     const report = reports.find(r => r.tracking === currentClaimTracking);
     const errEl = document.getElementById("claim-error");
     
+    // Error handling if record doesn't exist
     if (!report) {
         errEl.textContent = "Error: The selected item record no longer exists in the system database.";
         errEl.classList.remove("hidden");
         return;
     }
 
-    const secret = document.getElementById("claim-secret").value;
-    const sid = document.getElementById("claim-sid").value;
+    const enteredSecret = document.getElementById("claim-secret").value.trim();
+    const sid = document.getElementById("claim-sid").value.trim();
 
     if (!report.secret) {
         errEl.textContent = "This item has no secret code on file. Please visit the OSA office.";
@@ -488,14 +489,14 @@ function verifyClaim() {
         return;
     }
 
-    if (secret !== report.secret || sid !== report.sid) {
-        errEl.textContent = "Verification failed. Secret code or Student ID does not match.";
+    // Check if the auto-generated secret code and Student ID match
+    if (enteredSecret !== report.secret || sid !== report.sid) {
+        errEl.textContent = "Verification failed. The Secret Code or Student ID does not match.";
         errEl.classList.remove("hidden");
         return;
     }
 
-    report.status = "Claimed";
-    
+    // Success: Execute Inc Delete / Archive from active list
     reports = reports.filter(r => r.tracking !== currentClaimTracking);
     saveReports();
     
@@ -503,7 +504,6 @@ function verifyClaim() {
     alert(`✅ Item successfully claimed and archived (Inc Delete completed).`);
     renderClaimList();
     renderHome();
-}
 
   
 document.getElementById("admin-login-form").addEventListener("submit", function(e) {
@@ -585,4 +585,4 @@ function closePrivacyModal() {
     document.getElementById("privacy-modal").classList.add("hidden");
 }
  
-renderHome();
+renderHome();}

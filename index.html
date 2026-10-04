@@ -114,8 +114,9 @@
                             <option value="Bags">🎒 Bags</option>
                             <option value="Clothing">👕 Clothing</option>
                             <option value="Others">📦 Others</option>
-                        </select>
+                        </select>                
                     </div>
+
                     <div class="field">
                         <label>Item Name *</label>
                         <input type="text" id="lost-item-name" required>
@@ -133,8 +134,17 @@
                         <input type="date" id="lost-date" required>
                     </div>
                     <div class="field">
-                        <label>Location Lost *</label>
-                        <input type="text" id="lost-location" placeholder="e.g. Computer Lab" required>
+                        <label>Location Lost (Inside School Premises) *</label>
+                        <select id="lost-location" required>
+                            <option value="">-- Select School Location --</option>
+                            <option value="Computer Lab">Computer Lab</option>
+                            <option value="Library">Library</option>
+                            <option value="Canteen / Cafeteria">Canteen / Cafeteria</option>
+                            <option value="Gymnasium">Gymnasium</option>
+                            <option value="SHS Classroom">SHS Classroom</option>
+                            <option value="Admin Office / OSA">Admin Office / OSA</option>
+                            <option value="School Corridor / Hallway">School Corridor / Hallway</option>
+                        </select>
                     </div>
                     <div class="field-full">
                         <label>Description *</label>
@@ -191,8 +201,17 @@
                         <input type="date" id="found-date" required>
                     </div>
                     <div class="field">
-                        <label>Location Found *</label>
-                        <input type="text" id="found-location" placeholder="e.g. Cafeteria" required>
+                        <label>Location Lost (Inside School Premises) *</label>
+                        <select id="lost-location" required>
+                            <option value="">-- Select School Location --</option>
+                            <option value="Computer Lab">Computer Lab</option>
+                            <option value="Library">Library</option>
+                            <option value="Canteen / Cafeteria">Canteen / Cafeteria</option>
+                            <option value="Gymnasium">Gymnasium</option>
+                            <option value="SHS Classroom">SHS Classrooms</option>
+                            <option value="Admin Office / OSA">Admin Office / OSA</option>
+                            <option value="School Corridor / Hallway">School Corridor / Hallway</option>
+                        </select>
                     </div>
                     <div class="field">
                         <label>Turned Over To *</label>
